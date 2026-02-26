@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YouTube Sentiment Analyzer</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Space Grotesk', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 70px 20px;
+    overflow-x: hidden;
+    color: #e2e8f0;
+
+    /* Smooth futuristic gradient */
+    background: linear-gradient(-45deg, #0f172a, #111827, #1e293b, #0f2027);
+    background-size: 400% 400%;
+    animation: bgShift 18s ease infinite;
+}
+
+/* Background animation */
+@keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Futuristic animated heading */
+h1 {
+    font-size: 2.4rem;
+    font-weight: 600;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+
+    background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation: textGlow 6s linear infinite;
+}
+
+@keyframes textGlow {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+/* Input + Button container */
+.form-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 45px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Input */
+input {
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.05);
+    color: #f1f5f9;
+    width: 320px;
+    font-size: 0.95rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: #818cf8;
+    box-shadow: 0 0 0 3px rgba(129,140,248,0.2);
+}
+
+/* Button */
+button {
+    padding: 14px 24px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    color: white;
+
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    background-size: 200% auto;
+    transition: 0.4s ease;
+}
+
+button:hover {
+    background-position: right center;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99,102,241,0.4);
+}
+
+/* Glass card */
+.comment-box {
+    width: 75%;
+    max-width: 850px;
+    padding: 22px 28px;
+    margin-bottom: 20px;
+    border-radius: 16px;
+
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+
+    transition: all 0.3s ease;
+}
+
+.comment-box:hover {
+    border-color: rgba(129,140,248,0.4);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+}
+
+.comment-box p {
+    margin-bottom: 10px;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Sentiment Colors (clean & subtle) */
+.Positive {
+    color: #34d399;
+    font-weight: 600;
+}
+
+.Negative {
+    color: #f87171;
+    font-weight: 600;
+}
+
+.Neutral {
+    color: #fbbf24;
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .comment-box {
+        width: 95%;
+    }
+
+    input {
+        width: 100%;
+    }
+
+    .form-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+</style>
+
+
+
+
+</head>
+
+<body>
+
+<h1>🎥 YouTube Comment Sentiment Analyzer</h1>
+
+<form method="post">
+    <input type="text" name="keyword" placeholder="Enter topic (e.g. AI)" required>
+    <input type="number" name="count" placeholder="Number of comments" required>
+    <button type="submit">Analyze</button>
+</form>
+
+{% if comments %}
+<h2>Results for "{{ keyword }}"</h2>
+<p>Total Comments Analyzed: {{ total }}</p>
+
+{% for comment in comments %}
+<div class="comment-box">
+    <p>{{ comment.text }}</p>
+    <p class="{{ comment.sentiment }}">Sentiment: {{ comment.sentiment }}</p>
+</div>
+{% endfor %}
+{% endif %}
+
+</body>
+</html>
